@@ -1,32 +1,38 @@
-class String {
-  constructor(position, speed) {
+class MyString {
+  constructor(position, speed, note) {
     this.position = position;
     this.speed = speed;
     this.amplitude = 0;
     this.deviation = 0;
     this.elapsed = 0;
+    this.note = note;
   }
 }
 
 var s = function(p) {
 
-  var stringSpacing = 30;
   var elapsed = 0;
   var maxAmp = 40;
-  var damping = 0.5;
-  var speed = 1;
+  var damping = 0.3;
 
-  var strings = [
-    new String(50, 1),
-    new String(80, 0.5),
-    new String(110, 0.75),
-    new String(140, 1),
-    new String(170, 0.3),
-    new String(200, 0.8)
-  ];
+  var strings = [];
 
   p.setup = function() {
-    p.createCanvas(640, 480);
+    var myCanvas = p.createCanvas(210, window.innerHeight);
+    myCanvas.parent('myContainer');
+    
+    var e3 = p.loadSound('notes/e3.mp3');
+    var b2 = p.loadSound('notes/b2.mp3');
+    var g2 = p.loadSound('notes/g2.mp3');
+    var d2 = p.loadSound('notes/d2.mp3');
+    var a1 = p.loadSound('notes/a1.mp3');
+    var e1 = p.loadSound('notes/e1.mp3');
+    strings.push(new MyString(30, 0.5, e1));
+    strings.push(new MyString(60, 0.7, a1));
+    strings.push(new MyString(90, 0.9, d2));
+    strings.push(new MyString(120, 1, g2));
+    strings.push(new MyString(150, 1.2, b2));
+    strings.push(new MyString(180, 1.5, e3));
   };
 
   p.draw = function() {
@@ -37,8 +43,13 @@ var s = function(p) {
 
       var s = strings[i];
       var pos = s.position;
-      if ((p.pmouseY > pos && p.mouseY < pos) || (p.pmouseY < pos && p.mouseY > pos) || p.mouseY == pos) {
+      if (
+        (p.pmouseX > pos && p.mouseX < pos) ||
+        (p.pmouseX < pos && p.mouseX > pos) ||
+        (p.mouseX == pos && p.pmouseX != pos)
+      ) {
         s.amplitude = maxAmp;
+        s.note.play();
       }
 
       s.deviation = pos + (p.sin(s.elapsed)*s.amplitude);
@@ -48,12 +59,13 @@ var s = function(p) {
         s.amplitude -= damping;
       }
 
-      p.stroke(250, 0, 0);
+      p.stroke(121, 204, 229);
+      p.strokeWeight(3);
       p.curve(
-        p.width/2, s.deviation,
-        0, pos,
-        p.width, pos,
-        p.width/2, s.deviation
+        s.deviation, p.height/2,
+        pos, 0,
+        pos, p.height,
+        s.deviation, p.height/2
       );
     }
   
