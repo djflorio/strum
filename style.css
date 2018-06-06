@@ -2,6 +2,7 @@ body {
   margin: 0;
   text-align: center;
   background-color: #222;
+  font-family: 'Roboto', sans-serif;
 }
 
 .canvas-container {
@@ -22,6 +23,22 @@ body {
   bottom: 0;
   padding: 10px;
   box-sizing: border-box;
+}
+
+.options__info {
+  color: rgb(121, 204, 229);
+  text-align: left;
+  margin: 0 0 10px 0;
+}
+
+.options__link {
+  text-decoration: none;
+  color: rgb(208, 236, 245);
+  transition: 0.3s;
+}
+
+.options__link:hover {
+  text-shadow: 0 0 5px white;
 }
 
 .chord-btn {
