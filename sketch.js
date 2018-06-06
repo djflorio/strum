@@ -33,25 +33,30 @@ var s = function(p) {
     var myCanvas = p.createCanvas(210, window.innerHeight);
     myCanvas.parent('myContainer');
     
-    var e1 = p.loadSound('notes/e1.mp3');
-    var g1 = p.loadSound('notes/g1.mp3');
-    var a1 = p.loadSound('notes/a1.mp3');
-    var b1 = p.loadSound('notes/b1.mp3');
-    var c2 = p.loadSound('notes/c2.mp3');
-    var d2 = p.loadSound('notes/d2.mp3');
-    var e2 = p.loadSound('notes/e2.mp3');
-    var g2 = p.loadSound('notes/g2.mp3');
-    var a2 = p.loadSound('notes/a2.mp3');
-    var b2 = p.loadSound('notes/b2.mp3');
-    var c3 = p.loadSound('notes/c3.mp3');
-    var e3 = p.loadSound('notes/e3.mp3');
-    var g3 = p.loadSound('notes/g3.mp3');
+    var e1  = p.loadSound('notes/e1.mp3');
+    var g1  = p.loadSound('notes/g1.mp3');
+    var a1  = p.loadSound('notes/a1.mp3');
+    var b1  = p.loadSound('notes/b1.mp3');
+    var c2  = p.loadSound('notes/c2.mp3');
+    var d2  = p.loadSound('notes/d2.mp3');
+    var e2  = p.loadSound('notes/e2.mp3');
+    var g2  = p.loadSound('notes/g2.mp3');
+    var a2  = p.loadSound('notes/a2.mp3');
+    var b2  = p.loadSound('notes/b2.mp3');
+    var c3  = p.loadSound('notes/c3.mp3');
+    var d3  = p.loadSound('notes/d3.mp3');
+    var e3  = p.loadSound('notes/e3.mp3');
+    var f3  = p.loadSound('notes/f3.mp3');
+    var gb3 = p.loadSound('notes/gb3.mp3');
+    var g3  = p.loadSound('notes/g3.mp3');
 
     var standard = [e1, a1, d2, g2, b2, e3];
     var gmajor   = [g1, b1, d2, g2, b2, g3];
     var cmajor   = [g1, c2, e2, g2, c3, e3];
     var eminor   = [e1, b1, e2, g2, b2, e3];
     var aminor   = [e1, a1, e2, a2, c3, e3];
+    var dmajor   = [null, a1, d2, a2, d3, gb3];
+    var dminor   = [null, a1, d2, a2, d3, f3];
     
     strings.push(new MyString(30, 0.5, e1));
     strings.push(new MyString(60, 0.7, a1));
@@ -65,11 +70,15 @@ var s = function(p) {
     var cMajorBtn = document.querySelector("#btn-cmajor");
     var eMinorBtn = document.querySelector("#btn-eminor");
     var aMinorBtn = document.querySelector("#btn-aminor");
+    var dMajorBtn = document.querySelector("#btn-dmajor");
+    var dMinorBtn = document.querySelector("#btn-dminor");
     standardBtn.addEventListener('click', (e) => switchTuning(standard, e));
     gMajorBtn.addEventListener('click', (e) => switchTuning(gmajor, e));
     cMajorBtn.addEventListener('click', (e) => switchTuning(cmajor, e));
     eMinorBtn.addEventListener('click', (e) => switchTuning(eminor, e));
     aMinorBtn.addEventListener('click', (e) => switchTuning(aminor, e));
+    dMajorBtn.addEventListener('click', (e) => switchTuning(dmajor, e));
+    dMinorBtn.addEventListener('click', (e) => switchTuning(dminor, e));
   };
 
   p.draw = function() {
@@ -85,8 +94,10 @@ var s = function(p) {
         (p.pmouseX < pos && p.mouseX > pos) ||
         (p.mouseX == pos && p.pmouseX != pos)
       ) {
-        s.amplitude = maxAmp;
-        s.note.play();
+        if (s.note !== null) {
+          s.amplitude = maxAmp;
+          s.note.play();
+        }
       }
 
       s.deviation = pos + (p.sin(s.elapsed)*s.amplitude);
@@ -96,8 +107,14 @@ var s = function(p) {
         s.amplitude -= damping;
       }
 
-      p.stroke(121, 204, 229);
-      p.strokeWeight(3);
+      if (s.note == null) {
+        p.stroke(10, 10, 10);
+        p.strokeWeight(2);
+      } else {
+        p.stroke(121, 204, 229);
+        p.strokeWeight(3);
+      }
+      
       p.curve(
         s.deviation, p.height/2,
         pos, 0,
