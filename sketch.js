@@ -3,17 +3,15 @@ class MyString {
     this.position = position;
     this.speed = speed;
     this.amplitude = 0;
+    this.maxAmp = 40;
     this.deviation = 0;
     this.elapsed = 0;
+    this.damping = 0.3;
     this.note = note;
   }
 }
 
 var s = function(p) {
-
-  var elapsed = 0;
-  var maxAmp = 40;
-  var damping = 0.3;
 
   var strings = [];
 
@@ -101,7 +99,7 @@ var s = function(p) {
         (p.mouseX == pos && p.pmouseX != pos)
       ) {
         if (s.note !== null) {
-          s.amplitude = maxAmp;
+          s.amplitude = s.maxAmp;
           s.note.play();
         }
       }
@@ -110,7 +108,7 @@ var s = function(p) {
 
       s.elapsed += s.speed;
       if (s.amplitude > 0) {
-        s.amplitude -= damping;
+        s.amplitude -= s.damping;
       }
 
       if (s.note == null) {
