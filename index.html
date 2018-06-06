@@ -6,9 +6,17 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
-    <script src="sketch.js"></script>
+    
   </head>
   <body>
+    <div class="options">
+      <button id="btn-standard" class="chord-btn chord-btn--selected">Standard (EADGBE)</button>
+      <button id="btn-gmajor" class="chord-btn">G Major (GBDGBG)</button>
+      <button id="btn-cmajor" class="chord-btn">C Major (GCEGCE)</button>
+      <button id="btn-eminor" class="chord-btn">E Minor (EBEGBE)</button>
+      <button id="btn-aminor" class="chord-btn">A Minor (EAEACE)</button>
+    </div>
     <div class="canvas-container" id='myContainer'></div>
+    <script src="sketch.js"></script>
   </body>
 </html>

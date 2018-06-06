@@ -13,3 +13,33 @@ body {
 .p5Canvas {
   width: 50px;
 }
+
+.options {
+  width: 170px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.chord-btn {
+  display: block;
+  width: 100%;
+  border-style: none;
+  background: none;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: solid rgb(121, 204, 229) 2px;
+  color: rgb(121, 204, 229);
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+
+.chord-btn:hover,
+.chord-btn--selected {
+  background-color: rgb(121, 204, 229);
+  color: #222;
+}
